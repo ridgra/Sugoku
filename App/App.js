@@ -4,13 +4,16 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Provider } from 'react-redux';
 import store from './src/store';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator, HeaderBackButton } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  HeaderBackButton,
+} from '@react-navigation/stack';
 
 import { Main, Home } from './src/screens';
-import {Records} from './src/screens/index'
+import { Records } from './src/screens/index';
 
 const Stack = createStackNavigator();
-export default () => {
+export default (props) => {
   return (
     <Provider store={store}>
       <NavigationContainer>
@@ -37,21 +40,18 @@ export default () => {
           <Stack.Screen
             name="Records"
             component={Records}
-            options={{
-              // headerLeft: () => (
-              //   <HeaderBackButton
-              //     onPress={(props) => {
-              //       console.log(props);
-              //       navigation.navigate.goBack();
-              //     }}
-              //   />
-              // ),
-            }}
+            options={({ navigation }) => ({
+              headerLeft: () => (
+                <HeaderBackButton
+                  onPress={() => {
+                    navigation.navigate('HomeScreen');
+                  }}
+                />
+              ),
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
   );
 };
-
-
